@@ -12,16 +12,16 @@ public abstract class Creature extends Thing {
     public void eat(Thing aThing){
         this.inStomach = aThing;
         System.out.println(this.toString()
-                + this.getClass().toString().substring(5) + " has just eaten a "+ aThing.toString());
+                + this.getClassSubstring() + " has just eaten a "+ aThing.toString());
     }
 
     public void whatDidYouEat(){
         if (this.inStomach != null){
             System.out.println(this.toString() + this.getClass().toString().substring(5)
-                    + " has eaten a " + this.inStomach.toString() + this.getClass().toString().substring(5) + "!");
+                    + " has eaten a " + this.inStomach.toString() + this.getClassSubstring() + "!");
         }
         else {
-            System.out.println(this.toString() + this.getClass().toString().substring(5) + " has had nothing to eat!");
+            System.out.println(this.toString() + this.getClassSubstring() + " has had nothing to eat!");
         }
     }
 

@@ -5,7 +5,7 @@ public class Tiger extends Creature{
     }
 
     public void move(){
-        System.out.println(this.toString() + this.getClass().toString().substring(5) + " has just pounced.\n");
+        System.out.println(this.toString() + this.getClassSubstring() + " has just pounced.\n");
     }
 
 }

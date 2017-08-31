@@ -9,5 +9,9 @@ public class Thing {
         // return the name of the thing
         return this.name;
     }
+
+    public String getClassSubstring(){
+        return this.getClass().toString().substring(5);
+    }
 }
 
