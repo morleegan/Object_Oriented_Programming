@@ -9,7 +9,7 @@ public class Bat extends Creature implements Flyer {
     }
 
     public void fly(){
-        System.out.println(this.toString() + this.getClassSubstring() + " is swooping through the dark.");
+        System.out.println(this.toString() +" "+ this.getClass().getSimpleName() + " is swooping through the dark.");
     }
 
 }

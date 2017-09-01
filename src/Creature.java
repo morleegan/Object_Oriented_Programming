@@ -11,17 +11,17 @@ public abstract class Creature extends Thing {
 
     public void eat(Thing aThing){
         this.inStomach = aThing;
-        System.out.println(this.toString()
-                + this.getClassSubstring() + " has just eaten a "+ aThing.toString());
+        System.out.println(this.toString() + " "
+                + this.getClass() + " has just eaten a "+ aThing.toString());
     }
 
     public void whatDidYouEat(){
         if (this.inStomach != null){
             System.out.println(this.toString() + this.getClass().toString().substring(5)
-                    + " has eaten a " + this.inStomach.toString() + this.getClassSubstring() + "!");
+                    + " has eaten a " + this.inStomach.toString() +" "+ this.getClass().getSimpleName() + "!");
         }
         else {
-            System.out.println(this.toString() + this.getClassSubstring() + " has had nothing to eat!");
+            System.out.println(this.toString() +" "+ this.getClass().getSimpleName() + " has had nothing to eat!");
         }
     }
 

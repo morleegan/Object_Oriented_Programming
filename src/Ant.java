@@ -5,6 +5,6 @@ public class Ant extends Creature{
     }
 
     public void move(){
-        System.out.println(this.toString() + this.getClassSubstring() + " is crawling around.");
+        System.out.println(this.toString() + " " + this.getClass().getSimpleName() + " is crawling around.");
     }
 }
