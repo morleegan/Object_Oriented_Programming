@@ -21,7 +21,7 @@ sudo apt-get mvn
 
 mvn package 
 // creates jar file 
-java -cp target/HomeWork1_CS445-1.0-SNAPSHOT.jar homework1.testCreature
+java -cp target/HomeWork1_CS445-1.0-SNAPSHOT.jar TestCreature
 // this will run the main()    
 mvn clean; mvn test;
 // will run just the test suit 
