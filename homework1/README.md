@@ -14,14 +14,12 @@ How to run:
 git clone https://github.com/morleegan/morgan_peters_CS445.git
 cd homework1 
 
-// if you do not have maven installed: 
+//installed: 
+
 sudo apt-get mvn 
+sudo apt-get install default-jdk 
 
 // continue:
 
 mvn package 
-// creates jar file 
 java -cp target/HomeWork1_CS445-1.0-SNAPSHOT.jar TestCreature
-// this will run the main()    
-mvn clean; mvn test;
-// will run just the test suit 
