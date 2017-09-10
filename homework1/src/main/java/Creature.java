@@ -18,7 +18,7 @@ public abstract class Creature extends Thing {
     public void whatDidYouEat(){
         if (this.inStomach != null){
             System.out.println(this.toString() + this.getClass().toString().substring(5)
-                    + " has eaten a " + this.inStomach.toString() +" "+ this.getClass().getSimpleName() + "!");
+                    + " has eaten a " + this.inStomach.toString() +" "+ this.inStomach.getClass().getSimpleName() + "!");
         }
         else {
             System.out.println(this.toString() +" "+ this.getClass().getSimpleName() + " has had nothing to eat!");

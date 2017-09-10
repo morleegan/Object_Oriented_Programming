@@ -1,5 +1,5 @@
 public class TestCreature{
-    private static int CREATURE_COUNT = 3;
+    private static int CREATURE_COUNT = 4;
     private static int THING_COUNT = 2;
     private static int counter = 0;
 
@@ -7,18 +7,17 @@ public class TestCreature{
 
     public static void main(String[] args) {
        //initialize
-        Bat bat = new Bat("Batty");
-        Tiger tiger = new Tiger("Tiggy");
-        Ant ant = new Ant("Aunt");
-        Creature[] creatureArray = {ant, bat, tiger};
-        Thing[] thingArray = new Thing[THING_COUNT + CREATURE_COUNT];
+        Fly fly = new Fly("Bob");
+        Bat bat = new Bat("Jerry");
+        Tiger tiger = new Tiger("Larry");
+        Ant ant = new Ant("Tom");
+        Creature[] creatureArray = {ant, fly, bat, tiger};
 
+        Thing[] thingArray = new Thing[THING_COUNT + CREATURE_COUNT];
         for (int i=0; i<THING_COUNT; i++) {
             thingArray[i] = new Thing("Thing" + i);
         }
-        thingArray[THING_COUNT] = bat;
-        thingArray[THING_COUNT+1] = tiger;
-        thingArray[THING_COUNT+2] = ant;
+        System.arraycopy(creatureArray, 0, thingArray, 2, 4);
 
         //Test and printing
         printLoop(thingArray);
@@ -41,16 +40,12 @@ public class TestCreature{
         if(creature instanceof Flyer){
             ((Flyer) creature).fly();
         }
-        else if(counter%2==0){
-            creature.whatDidYouEat();
-        }
-        else if(counter%3==0){
-            Thing toEat = new Thing("Eat");
-            creature.eat(toEat);
-        }
         else{
             creature.move();
         }
-        counter =+1;
+        Tiger stan = new Tiger("Stan");
+        creature.eat(stan);
+        creature.whatDidYouEat();
+        counter +=1;
     }
 }

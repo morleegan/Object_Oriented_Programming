@@ -4,7 +4,7 @@ public class Fly extends Creature implements Flyer{
 
     @Override
     public void eat(Thing aThing) {
-        if (!aThing.getClass().getSimpleName().equals("Thing")) {
+        if (aThing instanceof Creature) {
             System.out.println(this.toString() + " " + this.getClass().getSimpleName() +
                     " won't eat a " + aThing.getClass().getSimpleName());
         }
