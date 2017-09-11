@@ -1,7 +1,9 @@
+import org.junit.Test;
+
 public class TestCreature{
     private static int CREATURE_COUNT = 4;
     private static int THING_COUNT = 2;
-    private static int counter = 0;
+    private static boolean flag = true;
 
     public TestCreature(){}
 
@@ -21,7 +23,6 @@ public class TestCreature{
 
         //Test and printing
         printLoop(thingArray);
-        System.out.println('\n');
         printLoop(creatureArray);
     }
 
@@ -30,10 +31,12 @@ public class TestCreature{
         System.out.println( name.substring(0, name.length()-2)+ "s:\n");
         for(Object object: objectArray){
             System.out.println(object.toString());
-            if (name.equals("Creature[]")){
+            if (object instanceof Creature && flag){
                 creatureActions((Creature) object);
             }
         }
+        System.out.println('\n');
+        flag = false;
     }
 
     private static void creatureActions(Creature creature){
@@ -43,9 +46,5 @@ public class TestCreature{
         else{
             creature.move();
         }
-        Tiger stan = new Tiger("Stan");
-        creature.eat(stan);
-        creature.whatDidYouEat();
-        counter +=1;
     }
 }

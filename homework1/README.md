@@ -5,7 +5,7 @@ Fall 2017 CS 445
 
 Dependencies:
  Testing: 
-    JUnit and Mockito 
+    JUnit, jacoco and Mockito 
  Implementation:   
     Maven 
 
@@ -15,11 +15,12 @@ git clone https://github.com/morleegan/morgan_peters_CS445.git
 cd homework1 
 
 //installed: 
-
 sudo apt-get mvn 
 sudo apt-get install default-jdk 
 
 // continue:
-
 mvn package 
 java -cp target/HomeWork1_CS445-1.0-SNAPSHOT.jar TestCreature
+
+// code coverage 
+open on browser: ../target/site/jacoco/default/index.html 
