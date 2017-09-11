@@ -22,5 +22,7 @@ sudo apt-get install default-jdk
 mvn package 
 java -cp target/HomeWork1_CS445-1.0-SNAPSHOT.jar TestCreature
 
+mvn exec:java -Dexec.mainClass="testCreature" -Dexec.classpathScope="test"
+
 // code coverage 
 open on browser: ../target/site/jacoco/default/index.html 
