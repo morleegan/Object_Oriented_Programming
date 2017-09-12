@@ -33,7 +33,6 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!-- Code Coverage report generation -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>

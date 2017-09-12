@@ -1,25 +1,27 @@
 import org.junit.Test;
 
 public class TestCreature{
-    private static int CREATURE_COUNT = 4;
-    private static int THING_COUNT = 2;
-    private static boolean flag = true;
+    private static int CREATURE_COUNT = 6;
+    private static int THING_COUNT = 10;
+    private static boolean flag = false;
 
     public TestCreature(){}
 
     public static void main(String[] args) {
        //initialize
-        Fly fly = new Fly("Bob");
-        Bat bat = new Bat("Jerry");
-        Tiger tiger = new Tiger("Larry");
-        Ant ant = new Ant("Tom");
-        Creature[] creatureArray = {ant, fly, bat, tiger};
+        Creature[] creatureArray = new Creature[CREATURE_COUNT];
+        creatureArray[0] = new Fly("Harry");
+        creatureArray[1] = new Bat("Black");
+        creatureArray[2] = new Tiger("Stripes");
+        creatureArray[3] = new Ant("Strong");
+        creatureArray[4] = new Fly("Bob");
+        creatureArray[5] = new Tiger("White");
 
         Thing[] thingArray = new Thing[THING_COUNT + CREATURE_COUNT];
         for (int i=0; i<THING_COUNT; i++) {
             thingArray[i] = new Thing("Thing" + i);
         }
-        System.arraycopy(creatureArray, 0, thingArray, 2, 4);
+        System.arraycopy(creatureArray, 0, thingArray, CREATURE_COUNT, THING_COUNT);
 
         //Test and printing
         printLoop(thingArray);
@@ -31,12 +33,12 @@ public class TestCreature{
         System.out.println( name.substring(0, name.length()-2)+ "s:\n");
         for(Object object: objectArray){
             System.out.println(object.toString());
-            if (object instanceof Creature && flag){
+            if (object instanceof Creature){
                 creatureActions((Creature) object);
             }
         }
         System.out.println('\n');
-        flag = false;
+        flag = true;
     }
 
     private static void creatureActions(Creature creature){
@@ -45,6 +47,11 @@ public class TestCreature{
         }
         else{
             creature.move();
+        }
+        if (flag) {
+            Thing toEat = new Thing("Harry");
+            creature.eat(toEat);
+            creature.whatDidYouEat();
         }
     }
 }
