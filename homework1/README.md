@@ -27,7 +27,7 @@ Morgan Peters, A20333151, Fall 2017 CS 445 <return>
 
     cd homework1 
     mvn -q package //complies and runs tests  
-    mvn -q exec:java -Dexec.mainClass="testCreature" -Dexec.classpathScope="test" //runs TestCreature.main() 
+    mvn -q exec:java -Dexec.mainClass="TestCreature" -Dexec.classpathScope="test" //runs TestCreature.main() 
       
 ###### Testing 
     mvn -q test  

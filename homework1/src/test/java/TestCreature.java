@@ -21,7 +21,7 @@ public class TestCreature{
         for (int i=0; i<THING_COUNT; i++) {
             thingArray[i] = new Thing("Thing" + i);
         }
-        System.arraycopy(creatureArray, 0, thingArray, CREATURE_COUNT, THING_COUNT);
+        System.arraycopy(creatureArray, 0, thingArray, THING_COUNT, CREATURE_COUNT);
 
         //Test and printing
         printLoop(thingArray);

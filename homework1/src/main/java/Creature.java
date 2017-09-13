@@ -12,7 +12,7 @@ public abstract class Creature extends Thing {
     public void eat(Thing aThing){
         this.inStomach = aThing;
         System.out.println(this.toString() + " "
-                + this.getClass() + " has just eaten a "+ aThing.toString());
+                + this.getClass().toString() + " has just eaten a "+ aThing.toString());
     }
 
     public void whatDidYouEat(){
