@@ -15,7 +15,7 @@ public class ImprovedStringTokenizer extends StringTokenizer{
     public String[] stringArray(){
         String [] strArr = new String[super.countTokens()];
         for (int i= 0; i<strArr.length; i++){
-            strArr[i] = super.nextToken();
+            strArr[i] = this.nextToken();
         }
         return strArr;
     }
