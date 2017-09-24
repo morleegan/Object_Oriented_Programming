@@ -1,5 +1,6 @@
-public class C extends A {
+public class C extends A{
     public C(){
-        super();
+    }
+    public void useD(D d){
     }
 }

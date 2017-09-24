@@ -31,4 +31,10 @@ public class Question2Tests {
         E eTest = new E();
         assertNotNull(eTest);
     }
+
+    @Test
+    public void FTest(){
+        F f = new F();
+        assertNotNull(f);
+    }
 }
