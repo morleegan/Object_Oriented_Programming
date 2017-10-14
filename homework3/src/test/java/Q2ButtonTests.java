@@ -1,3 +1,5 @@
+import Part2.Button;
+import Part2.LightBulb;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,13 +9,14 @@ import java.io.PrintStream;
 
 import static org.junit.Assert.assertEquals;
 
-public class LightBulbTests {
-    private LightBulb buttonTest;
+public class Q2ButtonTests {
+    private Button buttonTest;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Before
     public void startTest(){
-        buttonTest = new LightBulb();
+        LightBulb l = new LightBulb();
+        buttonTest = new Button(l);
         System.setOut(new PrintStream(outContent));
     }
 
@@ -24,14 +27,16 @@ public class LightBulbTests {
 
     @Test
     public void onTest(){
-        buttonTest.on();
-        assertEquals("LightBulb on.",  outContent.toString().trim());
+        buttonTest.switchOn();
+        String [] test = outContent.toString().split("\\r\\n|\\n|\\r");
+        assertEquals("Button switched to ON",  test[0].trim());
     }
 
     @Test
     public void offTest(){
-        buttonTest.off();
-        assertEquals("LightBulb off.", outContent.toString().trim());
+        buttonTest.switchOff();
+        String [] test = outContent.toString().split("\\r\\n|\\n|\\r");
+        assertEquals("Button switched to OFF", test[0].trim());
     }
 }
 
