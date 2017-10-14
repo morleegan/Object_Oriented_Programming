@@ -22,7 +22,7 @@ public class Q1ButtonTests {
 
     @After
     public void cleanUp(){
-        System.setOut(null);
+        System.setOut( null);
     }
 
     @Test
