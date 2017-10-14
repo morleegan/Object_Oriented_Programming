@@ -29,13 +29,13 @@ public class Q1ButtonTests {
     public void onTest(){
         buttonTest.switchOn();
         String [] test = outContent.toString().split("\\r\\n|\\n|\\r");
-        assertEquals("Part1.TableLamp switched to ON",  test[0].trim());
+        assertEquals("TableLamp switched to ON",  test[0].trim());
     }
 
     @Test
     public void offTest(){
         buttonTest.switchOff();
         String [] test = outContent.toString().split("\\r\\n|\\n|\\r");
-        assertEquals("Part1.TableLamp switched to OFF", test[0].trim());
+        assertEquals("TableLamp switched to OFF", test[0].trim());
     }
 }
