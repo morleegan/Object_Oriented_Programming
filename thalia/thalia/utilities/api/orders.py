@@ -15,8 +15,7 @@ class OrderAPI(API):
     def req_view_by_date(self, start_date, end_date):
         """returns orders in between the dates given"""
         try:
-            r = requests.get(self.url + self.req_url + '?start_date=' + str(start_date)
-                             + '&end_date=' + str(end_date))
+            r = requests.get(self.url + self.req_url + '?start_date=' + str(start_date) + '&end_date=' + str(end_date))
             r.raise_for_status()
             return r.json()
         except requests.HTTPError:

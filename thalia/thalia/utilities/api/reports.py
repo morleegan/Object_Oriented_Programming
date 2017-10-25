@@ -13,7 +13,7 @@ class ReportAPI(API):
                 setattr(self, opt, kws[opt])
 
     def req_view_by_date(self, start_date, end_date):
-        """:returns reports between start and end date"""
+        """returns reports between start and end date"""
         try:
             r = requests.get(self.url + self.req_url + '[?start_date=' + str(start_date)
                              + '&end_date=' + str(end_date) + ']')
@@ -23,7 +23,6 @@ class ReportAPI(API):
             return 404
 
     # past here are implemented by the API but are not used for reports (could be implemented later)
-
     def req_create(self, json_data):
         return NotImplemented
 
@@ -32,4 +31,5 @@ class ReportAPI(API):
 
     def req_update(self, rid, json_data):
         return NotImplemented
+
 
