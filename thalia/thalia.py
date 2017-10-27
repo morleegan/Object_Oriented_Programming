@@ -1,9 +1,4 @@
-from flask import Flask
+"""Top file of thalia, will be run when using the app"""
 
-app = Flask(__name__)
-
-tasks = [
-    {
-        'id'
-    }
-]
+if __name__ == '__main__':
+    print("hello")

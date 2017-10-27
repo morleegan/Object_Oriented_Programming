@@ -4,7 +4,6 @@ import httpretty
 from sure import expect
 
 # internal imports
-from thalia.utilities.api.api import API
 
 # TODO: Create base tests for API
 

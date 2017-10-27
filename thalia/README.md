@@ -8,7 +8,7 @@ Project Details
     Check out the requirements.txt
 
 ##### How to run: 
-    #python3 thalia.py..    
+    python3 thalia.py   
     
-###### How to run unit tests: 
-    # test thalia_test()... 
+##### How to run unit tests: 
+    nose2 test
