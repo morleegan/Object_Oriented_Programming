@@ -1,7 +1,7 @@
-#Homework Assignment 2 
+# Homework Assignment 2 
 Morgan Peters,  A20333151, CS445
 
-####Question 2 + 4 + 5
+#### Question 2 + 4 + 5
 
 ##### Testing: 
 
