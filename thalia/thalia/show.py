@@ -23,7 +23,7 @@ class Show:
         m = {
             "wid": self.wid,
             "show_info": self.show_info.make(),
-            "seating_info": self.seating_info.make()
+            "seating_info": self.seating_info.make_sections()
         }
         return m
 

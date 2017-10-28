@@ -1,4 +1,5 @@
 from thalia.section import Sections
+from thalia.row import Row
 from thalia.seats import Seat
 
 a = Seat(cid=1, r_cid=2)
@@ -16,41 +17,56 @@ k = Seat(cid=5, l_cid=4, r_cid=6)
 
 seat_list = [a, b, c, d]
 seat_list1 = [e, f, g, h]
-seat_list2 = [a, b, j, k, f, g, h]
+seat_list2 = [a, b, c, j, k, f, g, h]
 
-sec_test = Sections(seats={'A': seat_list})
+row1 = Row(row='A', seats=seat_list)
+row2 = Row(row='B', seats=seat_list1)
+row3 = Row(row='C', seats=seat_list2)
 
-sec_test1 = Sections(seats={
-    'A': seat_list,
-    'B': seat_list1,
-})
-
-sec_test2 = Sections(seats={'A': seat_list2})
+sec_test = Sections(row=[row1], sid=1, price=2)
+sec_test1 = Sections(row=[row1, row3], sid=1, price=2)
+sec_test2 = Sections(row=[row3])
 
 
 # tests for sections class
-def test_find_seat_success():
-    assert sec_test.find_seats(4) == [a, b, c, d]
-    assert sec_test2.find_seats(5) == [j, k, f, g, h]
-
-
-def test_find_seats_fail():
-    assert sec_test.find_seats(8) is None
+def test_find_seats():
+    assert sec_test.find_seats(3) == [a, b, c]
+    assert sec_test1.find_seats(5) == [a, b, c, j, k]
 
 
 def test_find_specific_success():
-    assert sec_test1.find_specific_seats('A', 3) == [a, b, c]
-    assert sec_test1.find_specific_seats('B', 4) == seat_list1
-    assert sec_test2.find_specific_seats('A', 5) == [j, k, f, g, h]
+    assert sec_test1.find_specific_seats('C', 3) == [a, b, c]
 
 
 def test_find_specific_fail():
-    assert sec_test1.find_specific_seats('A', 5) is None
+    assert sec_test1.find_specific_seats('A', 6) is None
+
+
+def test_make_show_section():
+    assert sec_test.make_sections() == {
+        "sid": 1,
+        "price": 2
+    }
+
+
+def test_make_json():
+    assert sec_test1.make_json() =={
+        "sid": 1,
+        "seating": [{
+            "row": 'A',
+            "seats": [1,2,3,4]
+        },
+            {
+            "row": 'C',
+            "seats": [1,2,3,4,5,6,7,8]
+        }]
+    }
 
 
 if __name__ == '__main__':
-    test_find_seat_success()
-    test_find_seats_fail()
+    test_find_seats()
     test_find_specific_success()
     test_find_specific_fail()
+    test_make_show_section()
+    test_make_json()
 
