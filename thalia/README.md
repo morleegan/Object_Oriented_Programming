@@ -5,7 +5,7 @@ Selling tickets to customers since 2017
 Project Details 
 --
 ##### Dependencies: 
-    Check out the requirements.txt
+requirements.txt
 
 ##### How to run: 
     python3 thalia.py   
