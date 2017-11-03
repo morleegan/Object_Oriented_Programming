@@ -26,6 +26,9 @@ class Row:
         """return json to use in api"""
         return {
             "row": self.row,
-            "seats": list(map(lambda s: s.cid, self.seats))
+            "seats": list(map(lambda s: s.seat, self.seats))
         }
+
+
+
 

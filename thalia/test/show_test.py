@@ -38,6 +38,7 @@ def test_make_seating_info():
         "price": 2
     }
 
+
 def test_create_show():
     sinfo = ShowInfo(date=datetime.date(2, 2, 2), name="Annie", time=datetime.time, web='http://annie.com')
     show = Show(show_info=sinfo)

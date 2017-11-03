@@ -1,9 +1,12 @@
 from thalia.seats import Seat
 
-s1 = Seat(cid=1, l_cid=0, r_cid=2)
-s2 = Seat(cid=2, l_cid=1, r_cid=3)
-s3 = Seat(cid=1, l_cid=0, r_cid=4)
-s4 = Seat(cid=2, l_cid=5, r_cid=3)
+s1 = Seat(seat=1)
+s2 = Seat(seat=2)
+s3 = Seat(seat=3)
+s4 = Seat(seat=4)
+s1.r_seat = s2
+s2.r_seat = s4
+s3.r_seat = s3
 
 
 def test_next_to_success():

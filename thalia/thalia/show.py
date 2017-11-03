@@ -1,12 +1,15 @@
 import datetime
+import uuid
+
+# from thalia.utilities.connect import ApiCalls
 
 
 class Show:
     """Show class: overarching class"""
-
     def __init__(self, **kws):
         """Initialization of show, contains show info"""
-        self.wid = 0        # TODO: add implementation of getID
+        # ApiCalls.__init__(self)
+        self.wid = uuid.uuid4()
         self.seating_info = None
         self.show_info = None
 
@@ -18,6 +21,9 @@ class Show:
         if self.wid == wid:
             return True
         return False
+
+    def search(self, key):
+        pass
 
     def make_json(self):
         m = {

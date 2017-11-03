@@ -1,18 +1,26 @@
 from thalia.row import Row
 from thalia.seats import Seat
 
-a = Seat(cid=1, r_cid=2)
-b = Seat(cid=2, l_cid=1, r_cid=3)
-c = Seat(cid=3, l_cid=2, r_cid=4)
-d = Seat(cid=4, l_cid=3)
+a = Seat(seat=1)
+b = Seat(seat=2)
+c = Seat(seat=3)
+d = Seat(seat=4)
+a.r_seat = b
+b.r_seat = c
+c.r_seat = d
 
-e = Seat(cid=5, r_cid=6)
-f = Seat(cid=6, l_cid=5, r_cid=7)
-g = Seat(cid=7, l_cid=6, r_cid=8)
-h = Seat(cid=8, l_cid=7)
+e = Seat(seat=5)
+f = Seat(seat=6)
+g = Seat(seat=7)
+h = Seat(seat=8)
+e.r_seat = f
+f.r_seat = g
+g.r_seat = h
 
-j = Seat(cid=4, l_cid=3, r_cid=5)
-k = Seat(cid=5, l_cid=4, r_cid=6)
+j = Seat(seat=4)
+k = Seat(seat=5)
+j.r_seat = k
+k.r_seat = f
 
 seat_list = [a, b, c, d]
 seat_list1 = [e, f, g, h]
@@ -30,6 +38,7 @@ def test_make_json():
 
 
 def test_seat_order_exists():
+    print(row1.seat_order(3))
     assert row1.seat_order(3) == [a, b, c]
     j.bought_seat()
     assert row2.seat_order(4) == [k, f, g, h]
