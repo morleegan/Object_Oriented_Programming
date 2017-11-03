@@ -3,6 +3,24 @@ from flask import Blueprint, request
 seating = Blueprint('seating', __name__)
 
 
+@seating.route('/seating/', methods=['GET', 'POST'])
+def req_view_all():
+    if request.method == 'POST':
+        pass
+    else:
+        pass
+
+
+@seating.route('/seating/<int:wid>', methods=['GET', 'PUT', 'DELETE'])
+def req_view(wid):
+    if request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return "sid " + str(wid)
+
+
 @seating.route('/seating', methods=['GET'])
 def req_seats_auto():
     # ?show=<int:wid>&section=<int:sid>&count=<int:count>

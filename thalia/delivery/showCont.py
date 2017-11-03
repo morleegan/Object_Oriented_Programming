@@ -1,6 +1,24 @@
-from flask import Blueprint
+from flask import Blueprint, request
 
 show_main = Blueprint('show_main', __name__)
+
+
+@show_main.route('/', methods=['GET', 'POST'])
+def req_view_all():
+    if request.method == 'POST':
+        pass
+    else:
+        pass
+
+
+@show_main.route('/<int:wid>', methods=['GET', 'PUT', 'DELETE'])
+def req_view(wid):
+    if request.method == 'PUT':
+        pass
+    elif request.method == 'DELETE':
+        pass
+    else:
+        return "sid " + str(wid)
 
 
 @show_main.route('/<int:wid>/sections/<int:sid>', methods=['GET'])
