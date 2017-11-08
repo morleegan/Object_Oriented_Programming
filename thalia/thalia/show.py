@@ -25,11 +25,3 @@ class Show:
     def search(self, key):
         pass
 
-    def make_json(self):
-        m = {
-            "wid": self.wid,
-            "show_info": self.show_info.make_json(),
-            "seating_info": self.seating_info.make_sections()
-        }
-        return m
-
