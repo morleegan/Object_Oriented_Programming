@@ -16,27 +16,27 @@ def test_check_id_fail():
     assert show1.check_id(3) is False
 
 
-def test_make_show():
-    assert show1.make_json() == {
-        "wid": 2,
-        "show_info": {
-            "name": "test",
-            "web": "http://test.com",
-            "date": datetime.date(2, 2, 2),
-            "time": datetime.time(1, 1, 1)
-        },
-        "seating_info": {
-            "sid": 1,
-            "price": 2
-        }
-    }
+# def test_make_show():
+#     assert show1.make_json() == {
+#         "wid": 2,
+#         "show_info": {
+#             "name": "test",
+#             "web": "http://test.com",
+#             "date": datetime.date(2, 2, 2),
+#             "time": datetime.time(1, 1, 1)
+#         },
+#         "seating_info": {
+#             "sid": 1,
+#             "price": 2
+#         }
+#     }
 
 
-def test_make_seating_info():
-    assert seatinginfo.make_sections() == {
-        "sid": 1,
-        "price": 2
-    }
+# def test_make_seating_info():
+#     assert seatinginfo.make_sections() == {
+#         "sid": 1,
+#         "price": 2
+#     }
 
 
 def test_create_show():
@@ -48,7 +48,7 @@ def test_create_show():
 if __name__ == '__main__':
     test_check_id_fail()
     test_check_id_success()
-    test_make_seating_info()
+    # test_make_seating_info()
     test_create_show()
-    test_make_show()
+    # test_make_show()
 

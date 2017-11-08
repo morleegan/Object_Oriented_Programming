@@ -56,31 +56,31 @@ def test_find_specific_fail():
     # assert sec_test1.status == "Error: 6 contiguous seats not available"
 
 
-def test_make_show_section():
-    assert sec_test.make_sections() == {
-        "sid": 1,
-        "price": 2
-    }
-
-
-def test_make_json():
-    assert sec_test1.make_json() =={
-        "sid": 1,
-        "seating": [{
-            "row": 'A',
-            "seats": [1,2,3,4]
-        },
-            {
-            "row": 'C',
-            "seats": [1,2,3,4,5,6,7,8]
-        }]
-    }
+# def test_make_show_section():
+#     assert sec_test.make_sections() == {
+#         "sid": 1,
+#         "price": 2
+#     }
+#
+#
+# def test_make_json():
+#     assert sec_test1.make_json() =={
+#         "sid": 1,
+#         "seating": [{
+#             "row": 'A',
+#             "seats": [1,2,3,4]
+#         },
+#             {
+#             "row": 'C',
+#             "seats": [1,2,3,4,5,6,7,8]
+#         }]
+#     }
 
 
 if __name__ == '__main__':
     # test_find_seats()
     test_find_specific_success()
     test_find_specific_fail()
-    test_make_show_section()
-    test_make_json()
+    # test_make_show_section()
+    # test_make_json()
 

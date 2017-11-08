@@ -1,4 +1,4 @@
-from thalia.utilities.connect import ApiCalls, Connection
+from thalia.utilities.request import ApiCalls, Connection
 
 from thalia.section import Sections
 

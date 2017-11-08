@@ -18,14 +18,6 @@ class Orders:
     def ordered_amount_init(self):
         return self.number_of_tickets * self.show.seating_info.price
 
-    def make_json(self):
-        return {
-            "wid": self.show.wid,
-            "section": self.show.seating_info.sid,
-            "seats": list(map(lambda seat: {"cid": seat.cid, "seat": seat.seat}, self.show.seating_info.row.seats)),
-            "patron_info": self.ordered_by
-        }
-
 
 class Patron:
     """Patron class"""

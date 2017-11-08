@@ -32,11 +32,3 @@ class Seat:
         """change status to sold"""
         self.status = "sold"
 
-    def make_json(self):
-        """creates json dict for api usage"""
-        return {
-            "seat": self.seat,
-            "status": self.status
-        }
-
-

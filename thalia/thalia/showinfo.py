@@ -13,11 +13,3 @@ class ShowInfo:
             if opt in kws.keys():
                 setattr(self, opt, kws[opt])
 
-    def make_json(self):
-        m = {
-            "name": self.name,
-            "web": self.web,
-            "date": self.date,
-            "time": self.time
-        }
-        return m

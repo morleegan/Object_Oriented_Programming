@@ -22,13 +22,4 @@ class Row:
             if len(seat_order) == req_num:
                 return seat_order
 
-    def make_json(self):
-        """return json to use in api"""
-        return {
-            "row": self.row,
-            "seats": list(map(lambda s: s.seat, self.seats))
-        }
-
-
-
 

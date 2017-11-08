@@ -1,4 +1,5 @@
 from flask import Blueprint, request
+from thalia.utilities.response import call_parser
 
 show_main = Blueprint('show_main', __name__)
 
@@ -6,7 +7,8 @@ show_main = Blueprint('show_main', __name__)
 @show_main.route('/', methods=['GET', 'POST'])
 def req_view_all():
     if request.method == 'POST':
-        pass
+        content = request.json
+        obj = call_parser(content)
     else:
         pass
 

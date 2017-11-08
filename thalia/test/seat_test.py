@@ -19,11 +19,11 @@ def test_next_to_fail():
     assert s1.next_seat(s2) is False
 
 
-def test_make_json():
-    assert s2.make_json() == {
-        "seat": 2,
-        "status": "available"
-    }
+# def test_make_json():
+#     assert s2.make_json() == {
+#         "seat": 2,
+#         "status": "available"
+#     }
 
 
 def test_bought_seat():
@@ -35,4 +35,4 @@ if __name__ == '__main__':
     test_next_to_success()
     test_next_to_fail()
     test_bought_seat()
-    test_make_json()
+    # test_make_json()

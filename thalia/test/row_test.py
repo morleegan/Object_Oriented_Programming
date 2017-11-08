@@ -30,11 +30,11 @@ row1 = Row(row='A', seats=seat_list)
 row2 = Row(row='B', seats=seat_list2)
 
 
-def test_make_json():
-    assert row1.make_json() == {
-        "row": 'A',
-        "seats": [1, 2, 3, 4]
-    }
+# def test_make_json():
+#     assert row1.make_json() == {
+#         "row": 'A',
+#         "seats": [1, 2, 3, 4]
+#     }
 
 
 def test_seat_order_exists():
@@ -49,6 +49,5 @@ def test_seat_order_fail():
 
 
 if __name__ == '__main__':
-    test_make_json()
     test_seat_order_exists()
     test_seat_order_fail()
