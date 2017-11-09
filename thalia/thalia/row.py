@@ -1,25 +1,57 @@
+from thalia.seats import Seat
+
+
 class Row:
-    """Row Class: """
-    def __init__(self, **kws):
-        self.row = None     # row number
-        self.seats = None   # list of seats
+    """Row Class: linked list implementation"""
 
-        for opt in ['row', 'seats']:
-            if opt in kws.keys():
-                setattr(self, opt, kws[opt])
+    def __init__(self, row=None, seats=list()):
+        self.__row = row                # row number
+        self.__seats = None             # list of seats
+        self.create_row(seats)          # creation of row
 
-    def seat_order(self, req_num):
-        """creates a list of seats next to each other"""
-        seat_order = []
-        for i in range(0, len(self.seats) - 1):
-            if self.seats[i].next_seat(self.seats[i + 1]):
-                if not seat_order:
-                    seat_order.append(self.seats[i])
-                seat_order.append(self.seats[i + 1])
+    def get_row_number(self):
+        return self.__row
+
+    def get_seats(self):
+        return self.__seats
+
+    def create_row(self, seat_list):
+        """Creation of the linked list"""
+        for s in seat_list:
+            seat = Seat(seat=s)
+            if self.__seats is None:
+                self.__seats = seat
             else:
-                seat_order = []
-            # check for success
-            if len(seat_order) == req_num:
-                return seat_order
+                seat.r_seat = self.__seats
+                seat.r_seat.l_seat = seat
+                self.__seats = seat
+
+    def search_row(self, cid):
+        """find cid in the row"""
+        r = self.get_seats()
+        if r is not None:
+            while r.r_seat is not None:
+                if r.cid == cid:
+                    return r
+                r = r.r_seat
+            if r.cid == cid:
+                return r
+        return None
+
+    def find_seats(self, num_req):
+        """creates a order of seats for a num requested"""
+        order = list()
+        r = self.get_seats()
+        while r.r_seat is not None:
+            if r.check_availability():
+                order.append(r)
+                if len(order) == num_req:
+                    return order
+            else:
+                order = list()
+            r = r.r_seat
+        return None
+
+
 
 

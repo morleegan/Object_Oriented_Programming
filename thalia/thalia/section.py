@@ -4,60 +4,54 @@ import uuid
 from thalia.row import Row
 
 
-class Singleton(type):
-    _instances = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
-
-
-class Theater(metaclass=Singleton):
-    """Theater/Seating section."""
-
-    def __init__(self, *args, **kwargs):
-        self.sections = list()
-        self.theater = dict()
-
-        for opt in ['theater']:
-            if opt in kwargs.keys():
-                setattr(self, opt, kwargs[opt])
-
-        self.create_theater(self.theater)
-
-    def create_theater(self, theater):
-        """theater is a list of"""
-        for section in theater:
-            new_seating = Sections(name=section['section_name'], row=section['seating'])
-            self.sections.append(new_seating)
-
-
 class Sections:
     """Section class: holds seats and row values"""
 
-    def __init__(self, **kwargs):
+    def __init__(self, wid=None, price=None, row=dict(), name=None):
         """Initialization of Section Class"""
         # ApiCalls.__init__(self)
-        self.sid = uuid.uuid4()                 # id of section
-        self.name = None                        # section name
-        self.price = None                       # price of section
-        self.row = None                         # list of row classes
-        self.status = "ok"
+        self.__wid = wid if wid else uuid.uuid4()   # id of section
+        self.__name = name                          # section name
+        self.__price = price                        # price of section
+        self.__rows = list()                        # list of row classes
+        self.__status = "ok"
+        self.create_section(row)
 
-        for opt in ['sid', 'price', 'row']:
-            if opt in kwargs.keys():
-                setattr(self, opt, kwargs[opt])
+    def get_wid(self):
+        return self.__wid
+
+    def get_rows(self):
+        return self.__rows
+
+    def get_status(self):
+        return self.__status
+
+    def get_price(self):
+        return self.__price
+
+    def set_status(self, new_status):
+        self.__status = new_status
+
+    def create_section(self, rows):
+        if not self.__rows:
+            row_list = list()
+            for key, val in rows.items():
+                r = Row(row=key, seats=val)
+                row_list.append(r)
+            self.__rows = row_list
 
     def find_seats(self, req_num):
         """find seats for order"""
-        for r in self.row:
-            return r.seat_order(req_num)
+        rows = self.get_rows()
+        for r in rows:
+            seats = r.find_seats(req_num)
+            if seats:
+                return seats
 
-        self.status = "Error: " + str(req_num) + " contiguous seats not available"
+        err = "Error: " + str(req_num) + " contiguous seats not available"
+        self.set_status(err)
+        return None
 
-    def find_specific_seats(self, row_num, req_num):
-        """find seats when the row is given"""
-        for r in self.row:
-            if r.row == row_num:
-                return r.seat_order(req_num)
+    def find_specific_seats(self, list_cid):
+        """TODO: not in api"""
+        pass
