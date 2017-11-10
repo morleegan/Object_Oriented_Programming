@@ -9,11 +9,20 @@ class Row:
         self.__seats = None             # list of seats
         self.create_row(seats)          # creation of row
 
-    def get_row_number(self):
+    def get_name(self):
         return self.__row
 
     def get_seats(self):
         return self.__seats
+
+    def get_seats_as_list(self):
+        seat_list = []
+        r = self.get_seats()
+        while r.r_seat is not None:
+            seat_list.append(r.get_name())
+            r = r.r_seat
+        seat_list.append(r.get_name())
+        return sorted(seat_list)
 
     def create_row(self, seat_list):
         """Creation of the linked list"""
@@ -31,10 +40,10 @@ class Row:
         r = self.get_seats()
         if r is not None:
             while r.r_seat is not None:
-                if r.cid == cid:
+                if r.get_cid() == cid:
                     return r
                 r = r.r_seat
-            if r.cid == cid:
+            if r.get_cid() == cid:
                 return r
         return None
 
@@ -43,7 +52,7 @@ class Row:
         order = list()
         r = self.get_seats()
         while r.r_seat is not None:
-            if r.check_availability():
+            if r.check_availability():      # may need to look through orders to see if this is sold...
                 order.append(r)
                 if len(order) == num_req:
                     return order

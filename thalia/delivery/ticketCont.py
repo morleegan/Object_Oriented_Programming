@@ -3,12 +3,12 @@ from flask import Blueprint
 ticket = Blueprint('ticket', __name__)
 
 
-@ticket.route('/<int:tid>', methods=['GET', 'DELETE'])
+@ticket.route('/<tid>', methods=['GET'])
 def req_view_t(tid):
     return "ticket " + str(tid)
 
 
-@ticket.route('/', methods=['GET', 'POST'])
+@ticket.route('/', methods=['POST'])
 def req_view_all_t():
     return "ticket index"
 

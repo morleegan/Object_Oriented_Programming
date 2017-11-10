@@ -11,14 +11,9 @@ def req_view_all():
         pass
 
 
-@order.route('/orders/<int:wid>', methods=['GET', 'PUT', 'DELETE'])
+@order.route('/orders/<wid>', methods=['GET'])
 def req_view(wid):
-    if request.method == 'PUT':
-        pass
-    elif request.method == 'DELETE':
-        pass
-    else:
-        return "sid " + str(wid)
+    return "sid " + str(wid)
 
 
 @order.route('/orders', methods=['GET'])

@@ -2,14 +2,35 @@ import datetime
 
 
 class ShowInfo:
+    """Show API"""
+    def __init__(self, web=None, name=None, date=datetime.datetime(day=2, month=2, year=2017), time=datetime.time()):
+        self.__web = web
+        self.__name = name
+        self.__date = date
+        self.__time = time
 
-    def __init__(self, **kws):
-        self.web = None
-        self.name = None
-        self.date = datetime.date(2, 2, 2)
-        self.time = datetime.time()
+    def get_name(self):
+        return self.__name
 
-        for opt in ['web', 'name', 'date', 'time']:
-            if opt in kws.keys():
-                setattr(self, opt, kws[opt])
+    def get_web(self):
+        return self.__web
+
+    def get_date(self):
+        return self.__date
+
+    def get_time(self):
+        return self.__time
+
+    def change_web(self, web):
+        self.__web = web
+
+    def change_name(self, name):
+        self.__name = name
+
+    def change_time(self, time):
+        self.__time = time
+
+    def change_date(self, date):
+        self.__date = date
+
 

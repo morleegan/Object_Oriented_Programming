@@ -1,24 +1,19 @@
-import datetime
 import uuid
-
-# from thalia.utilities.connect import ApiCalls
 
 
 class Show:
     """Show class: overarching class"""
-    def __init__(self, **kws):
+    def __init__(self, seating_info=None, show_info=None):
         """Initialization of show, contains show info"""
-        # ApiCalls.__init__(self)
-        self.wid = uuid.uuid4()
-        self.seating_info = None
-        self.show_info = None
+        self.__wid = uuid.uuid4().hex
+        self.seating_info = seating_info
+        self.show_info = show_info
 
-        for opt in ['wid', 'seating_info', 'show_info']:
-            if opt in kws.keys():
-                setattr(self, opt, kws[opt])
+    def get_wid(self):
+        return self.__wid
 
     def check_id(self, wid):
-        if self.wid == wid:
+        if self.__wid == wid:
             return True
         return False
 
