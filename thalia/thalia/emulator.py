@@ -51,8 +51,7 @@ class ShowEmulator(Emulator):
 
     def __init__(self, show=None):
         Emulator.__init__(self)
-        showinfo = ShowInfo()
-        self.show = Show(show_info=showinfo)
+        self.show = show
 
     def make_json(self):
         return {
@@ -68,3 +67,58 @@ class ShowEmulator(Emulator):
             "date": str(show_info.get_date()).strip(' 00:00:00'),
             "time": str(show_info.get_time())
         }
+
+
+class PatronEmulator(Emulator):
+    """API patron creates JSON"""
+
+    def __init__(self):
+        Emulator.__init__(self)
+
+    def make_json(self, patron=None):
+        if patron:
+            return {
+                "name": patron.get_name(),
+                "phone": patron.get_phone(),
+                "email": patron.get_email(),
+                "billing_address": patron.get_bill_adr(),
+                "cc_number": patron.get_cc_num(),
+                "cc_expiration_date": patron.get_cc_exp()
+            }
+        return patron
+
+
+class OrderEmulator(Emulator):
+    """API order creates JSON"""
+    def __init__(self):
+        Emulator.__init__(self)
+
+    @staticmethod
+    def make_json(order=None):
+        if order:
+            show = order.get_show()
+            return {
+                "oid": order.get_oid(),
+                "wid": show.get_wid(),
+                "show_info": ShowEmulator.make_show_info(show.get_showinfo())
+            }
+        return None
+
+
+class DonationEmulator(Emulator):
+    """API donation emulator"""
+    def __init__(self):
+        Emulator.__init__(self)
+
+    @staticmethod
+    def make_json(donation=None):
+        if donation:
+            return {
+                "did": donation.get_did(),
+                "wid": donation.get_wid(),
+                "count": donation.get_ticket_amount(),
+                "tickets": donation.get_assigned_tickets(),
+                "status": donation.get_status(),
+                "patron_info": PatronEmulator.make_json(donation.get_patron())
+            }
+        return donation
