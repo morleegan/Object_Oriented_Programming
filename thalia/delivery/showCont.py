@@ -8,7 +8,8 @@ show_emu = ShowEmulator()
 @show_main.route('/', methods=['GET', 'POST'])
 def req_view_all():
     if request.method == 'POST':
-        content = request.json
+        content = request.get_json()
+        return jsonify(show_emu.make_object(content))
     else:
         return jsonify(show_emu.make_json())
 

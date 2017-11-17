@@ -1,4 +1,6 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
+from thalia.emulator import OrderEmulator
+from thalia.order import Orders
 
 order = Blueprint('order', __name__)
 
@@ -8,12 +10,19 @@ def req_view_all():
     if request.method == 'POST':
         pass
     else:
-        pass
+        all_returned = list()
+        # TODO: get all orders
+        orders = list()
+        for o in orders:
+            all_returned.append(OrderEmulator.make_json(o))
+        return jsonify(all_returned)
 
 
-@order.route('/orders/<wid>', methods=['GET'])
-def req_view(wid):
-    return "sid " + str(wid)
+@order.route('/orders/<oid>', methods=['GET'])
+def req_view(oid):
+    # TODO: solve the finding of order when you have oid, incorrect call
+    oid_order = Orders(oid)
+    return OrderEmulator.make_json_w_oid(oid_order)
 
 
 @order.route('/orders', methods=['GET'])

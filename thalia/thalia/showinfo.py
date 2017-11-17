@@ -21,16 +21,5 @@ class ShowInfo:
     def get_time(self):
         return self.__time
 
-    def change_web(self, web):
-        self.__web = web
-
-    def change_name(self, name):
-        self.__name = name
-
-    def change_time(self, time):
-        self.__time = time
-
-    def change_date(self, date):
-        self.__date = date
 
 

@@ -1,7 +1,10 @@
-import json
 from thalia.venue import Theater
 from thalia.show import Show
 from thalia.showinfo import ShowInfo
+
+theater = Theater()
+show_list = list()
+order_list = list()
 
 
 class Emulator:
@@ -10,54 +13,64 @@ class Emulator:
         pass
 
     def make_json(self):
-        pass
+        return NotImplemented
+
+    def make_object(self):
+        return NotImplemented
 
 
-class SectionsEmulator(Emulator):
+class TheaterEmulator(Emulator):
     """API Sections/Seating calls are turned into JSON here"""
-    obj = Theater()
 
     def __init__(self):
         Emulator.__init__(self)
-        self.sections = self.obj.get_theater()
+        self.theater = theater
 
     def make_json(self):
-        return list(map(lambda x: {"sid": x.get_sid(), "section_name": x.get_name()}, self.sections))
+        sections = self.theater.get_theater()
+        return list(map(lambda x: {"sid": x.get_sid(), "section_name": x.get_name()}, sections))
 
-    def make_section_by_id(self, sid):
-        for s in self.sections:
-            if str(s.get_sid()) == str(sid):
+    def make_section_by_id(self, sid=0):
+        for section in self.theater.get_theater():
+            if sid == section.get_sid():
                 return {
-                    "sid": s.get_sid(),
-                    "section_name": s.get_name(),
-                    "seating": list(map(lambda x: {"row": x.get_name(), "seats": x.get_seats_as_list()}, s.get_rows()))
+                    "sid": section.get_sid(),
+                    "section_name": section.get_name(),
+                    "seating": list(map(lambda x: {"row": x.get_name(), "seats": x.get_seats_as_list()},
+                                        section.get_rows()))
                 }
+        return None
 
-    def make_seats_request(self, wid, sid, count):
-        return {
-            "wid": wid,
-            "show_info": {},
-            "sid": sid,
-            "section_name": None,
-            "starting_seat_id": None,
-            "status": "ok",
-            "total_amount": count,
-            "seating": [],
-        }
+    def make_seats_request(self, sid, wid):
+        # return {
+        #     "wid": None,
+        #     "show_info": {},
+        #     "sid": None,
+        #     "section_name": None,
+        #     "starting_seat_id": None,
+        #     "status": "ok",
+        #     "total_amount": None,
+        #     "seating": [],
+        # }
+        return NotImplemented
 
 
 class ShowEmulator(Emulator):
     """API connection creates JSON for show"""
 
-    def __init__(self, show=None):
+    def __init__(self, shows=None):
         Emulator.__init__(self)
-        self.show = show
+        self.shows = show_list if show_list else shows
 
     def make_json(self):
-        return {
-            "wid": self.show.get_wid(),
-            "show_info": self.make_show_info(self.show.show_info)
-        }
+        show_json = list()
+        if self.shows:
+            for show in self.shows:
+                show_json.append({
+                    "wid": show.get_wid(),
+                    "show_info": ShowEmulator.make_show_info(show.get_show_info())
+                })
+        return show_json
 
     @staticmethod
     def make_show_info(show_info):
@@ -68,14 +81,27 @@ class ShowEmulator(Emulator):
             "time": str(show_info.get_time())
         }
 
+    def make_object(self, obj=None):
+        showinfo_dict = obj['show_info']
+
+        showinfo = ShowInfo(name=showinfo_dict['name'], web=showinfo_dict['web'], date=showinfo_dict['date'],
+                            time=showinfo_dict['time'])
+
+        theater_emu = TheaterEmulator()
+        cur_theater = theater_emu.theater
+
+        new_show = Show(show_info=showinfo, seating_info=cur_theater)
+        show_list.append(new_show)
+        return {"wid": new_show.get_wid()}
+
 
 class PatronEmulator(Emulator):
     """API patron creates JSON"""
-
     def __init__(self):
         Emulator.__init__(self)
 
-    def make_json(self, patron=None):
+    @staticmethod
+    def make_json(patron=None):
         if patron:
             return {
                 "name": patron.get_name(),
@@ -97,12 +123,44 @@ class OrderEmulator(Emulator):
     def make_json(order=None):
         if order:
             show = order.get_show()
+            patron = order.get_patron()
             return {
                 "oid": order.get_oid(),
                 "wid": show.get_wid(),
-                "show_info": ShowEmulator.make_show_info(show.get_showinfo())
+                "show_info": ShowEmulator.make_show_info(show.get_showinfo()),
+                "date_ordered": order.get_date_ordered(),
+                "number_of_tickets": order.get_ticket_amount(),
+                "patron_info": PatronEmulator.make_json(patron),
+
             }
-        return None
+        return order
+
+    @staticmethod
+    def make_json_w_oid(order=None):
+        if order:
+            before = OrderEmulator.make_json(order)
+            ticket = order.get_tickets()
+            before["tickets"] = list(map(lambda x: TicketEmulator.make_json(x), ticket))
+            return before
+        return order
+
+    @staticmethod
+    def make_post(order=None):
+        if order:
+            show = order.get_show()
+            ticket = order.get_tickets()
+            return {
+                "oid": order.get_oid(),
+                "wid": show.get_wid(),
+                "show_info": ShowEmulator.make_show_info(show.get_showinfo()),
+                "date_ordered": order.get_date_ordered(),
+                "order_amount": order.get_order_amount(),
+                "tickets": list(map(lambda x: {"ticket": x.get_name}, ticket))
+            }
+
+    @staticmethod
+    def make_object(obj=None):
+        return NotImplementedError
 
 
 class DonationEmulator(Emulator):
@@ -112,6 +170,7 @@ class DonationEmulator(Emulator):
 
     @staticmethod
     def make_json(donation=None):
+        """show.donations"""
         if donation:
             return {
                 "did": donation.get_did(),
@@ -122,3 +181,22 @@ class DonationEmulator(Emulator):
                 "patron_info": PatronEmulator.make_json(donation.get_patron())
             }
         return donation
+
+    @staticmethod
+    def make_post(did=None):
+        if did:
+            return {
+                "did": did
+            }
+
+
+class TicketEmulator(Emulator):
+    """API ticket"""
+    def __init__(self):
+        Emulator.__init__(self)
+
+    @staticmethod
+    def make_json(ticket=None):
+        if ticket:
+            return {"tid": ticket.get_tid(), "status": ticket.get_status()}
+        return ticket

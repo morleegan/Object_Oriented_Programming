@@ -37,7 +37,7 @@ class Sections:
         self.__status = new_status
 
     def check_sid(self, other_sid):
-        if self.get_wid() == other_sid:
+        if self.get_sid() == other_sid:
             return True
         else:
             return False
