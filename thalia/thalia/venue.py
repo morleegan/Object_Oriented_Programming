@@ -219,13 +219,32 @@ class Theater:
 
     def __init__(self):
         self.__theater = list()
+        self.__seating = list()
         self.create_theater(self.theater)
 
     def get_theater(self):
         return self.__theater
 
+    def get_seating(self):
+        return self.__seating
+
+    def set_seating(self, seating):
+        self.__seating = seating
+
     def create_theater(self, theater_json):
         """theater is a list of"""
+        count = 123
         for section in theater_json:
-            new_seating = Sections(name=section['section_name'], row=section['seating'])
+            new_seating = Sections(sid=count, name=section['section_name'], row=section['seating'])
+            count += 1
             self.__theater.append(new_seating)
+
+    def create_seating(self, seating):
+        create_seating = list()
+        for s in seating:
+            for sec in self.get_theater():
+                if int(s['sid']) == sec.get_sid():
+                    sec.set_price(s['price'])
+                    create_seating.append(sec)
+        self.set_seating(create_seating)
+

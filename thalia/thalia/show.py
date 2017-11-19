@@ -18,7 +18,7 @@ class Show:
     def get_seating_info(self):
         return self.__seating_info
 
-    def check_id(self, wid):
+    def check_wid(self, wid):
         if self.__wid == wid:
             return True
         return False

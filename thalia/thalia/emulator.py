@@ -2,10 +2,6 @@ from thalia.venue import Theater
 from thalia.show import Show
 from thalia.showinfo import ShowInfo
 
-theater = Theater()
-show_list = list()
-order_list = list()
-
 
 class Emulator:
     """Interface between Delivery and Thalia"""
@@ -24,17 +20,17 @@ class TheaterEmulator(Emulator):
 
     def __init__(self):
         Emulator.__init__(self)
-        self.theater = theater
+        self.theater = Theater()
 
     def make_json(self):
         sections = self.theater.get_theater()
-        return list(map(lambda x: {"sid": x.get_sid(), "section_name": x.get_name()}, sections))
+        return list(map(lambda x: {"sid": str(x.get_sid()), "section_name": x.get_name()}, sections))
 
     def make_section_by_id(self, sid=0):
         for section in self.theater.get_theater():
-            if sid == section.get_sid():
+            if sid == str(section.get_sid()):
                 return {
-                    "sid": section.get_sid(),
+                    "sid": str(section.get_sid()),
                     "section_name": section.get_name(),
                     "seating": list(map(lambda x: {"row": x.get_name(), "seats": x.get_seats_as_list()},
                                         section.get_rows()))
@@ -58,9 +54,9 @@ class TheaterEmulator(Emulator):
 class ShowEmulator(Emulator):
     """API connection creates JSON for show"""
 
-    def __init__(self, shows=None):
+    def __init__(self, shows=list()):
         Emulator.__init__(self)
-        self.shows = show_list if show_list else shows
+        self.shows = shows
 
     def make_json(self):
         show_json = list()
@@ -72,6 +68,15 @@ class ShowEmulator(Emulator):
                 })
         return show_json
 
+    def make_json_by_id(self, wid):
+        for s in self.shows:
+            if s.get_wid() == wid:
+                return {
+                    "wid": wid,
+                    "show_info": self.make_show_info(s.get_show_info()),
+                    "seating_info": list(map(lambda x: {"sid": x.get_sid(), "price": x.get_price()}, s.get_seating_info()))
+                }
+
     @staticmethod
     def make_show_info(show_info):
         return {
@@ -81,18 +86,45 @@ class ShowEmulator(Emulator):
             "time": str(show_info.get_time())
         }
 
-    def make_object(self, obj=None):
-        showinfo_dict = obj['show_info']
+    def make_object(self, obj=None, seating=None, showinfo=None):
+        """POST show"""
+        showinfo_obj = ShowInfo(name=showinfo['name'], web=showinfo['web'], date=showinfo['date'], time=showinfo['time'])
+        theater = Theater()
+        theater.create_seating(seating)
+        new_show = Show(show_info=showinfo_obj, seating_info=theater.get_seating())
+        self.shows.append(new_show)
+        return {"wid": str(new_show.get_wid())}
 
-        showinfo = ShowInfo(name=showinfo_dict['name'], web=showinfo_dict['web'], date=showinfo_dict['date'],
-                            time=showinfo_dict['time'])
+    def update_object(self, wid=0, show_info=None, seating=None):
+        """PUT shows with wid"""
+        for s in self.shows:
+            if s.check_wid(wid):
+                s.get_show_info().update_showinfo(show_info)
+                [x.set_price(y['price']) for x, y in zip(s.get_seating_info(), seating)]
+                return 'success'
 
-        theater_emu = TheaterEmulator()
-        cur_theater = theater_emu.theater
+    def make_json_by_sections(self, wid):
+        """GET shows by section with wid"""
+        for s in self.shows:
+            if s.check_wid(wid):
+                return list(map(lambda x: {"sid": x.get_sid(),"section_name":x.get_name(),"price": x.get_price()},
+                                s.get_seating_info()))
 
-        new_show = Show(show_info=showinfo, seating_info=cur_theater)
-        show_list.append(new_show)
-        return {"wid": new_show.get_wid()}
+    def make_json_by_section_sid(self, wid, sid):
+        """GET seating of section, wid, sid"""
+        for show in self.shows:
+            if show.check_wid(wid):
+                for sec in show.get_seating_info():
+                    if sec.check_sid(sid):
+                        return {
+                            "wid": wid,
+                            "show_info": self.make_show_info(show.get_show_info()),
+                            "sid": sid,
+                            "section_name": sec.get_name(),
+                            "price": sec.get_price(),
+                            "seating": list(map(lambda x: {"row": x.get_name(), "seats": x.get_seats_as_list()},
+                                                sec.get_rows()))
+                        }
 
 
 class PatronEmulator(Emulator):

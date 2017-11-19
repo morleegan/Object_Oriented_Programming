@@ -7,6 +7,7 @@ from delivery.showCont import show_main
 from delivery.ticketCont import ticket
 
 app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False
 
 """Header of Blueprints used in flask"""
 

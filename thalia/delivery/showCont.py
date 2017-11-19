@@ -9,7 +9,10 @@ show_emu = ShowEmulator()
 def req_view_all():
     if request.method == 'POST':
         content = request.get_json()
-        return jsonify(show_emu.make_object(content))
+        showinfo = content['show_info']
+        seating = content['seating_info']
+        r_json = show_emu.make_object(showinfo=showinfo, seating=seating)
+        return jsonify(r_json)
     else:
         return jsonify(show_emu.make_json())
 
@@ -17,14 +20,21 @@ def req_view_all():
 @show_main.route('/<wid>', methods=['GET', 'PUT'])
 def req_view(wid):
     if request.method == 'PUT':
-        pass
+        content = request.get_json()
+        s = show_emu.update_object(wid=wid, show_info=content['show_info'], seating=content['seating_info'])
+        return jsonify(s)
     else:
-        return "sid " + str(wid)
+        return jsonify(show_emu.make_json_by_id(wid))
 
 
-@show_main.route('/<int:wid>/sections/<int:sid>', methods=['GET'])
-def req_show_section(wid, sid):
-    return "show: " + str(wid) + " section " + str(sid)
+@show_main.route('/<wid>/sections', methods=['GET'])
+def req_show_section(wid):
+    return jsonify(show_emu.make_json_by_sections(wid))
+
+
+@show_main.route('/<wid>/sections/<sid>', methods=['GET'])
+def req_show_section_by_sid(wid, sid):
+    return jsonify(show_emu.make_json_by_section_sid(wid=wid, sid=sid))
 
 
 @show_main.route('/<int:wid>/donations/<int:did>', methods=['GET'])

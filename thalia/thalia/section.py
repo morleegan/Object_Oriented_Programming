@@ -37,7 +37,7 @@ class Sections:
         self.__status = new_status
 
     def check_sid(self, other_sid):
-        if self.get_sid() == other_sid:
+        if str(self.get_sid()) == str(other_sid):
             return True
         else:
             return False
@@ -65,4 +65,4 @@ class Sections:
 
     def find_specific_seats(self, list_cid):
         """ TODO: Not in API """
-        return NotImplementedError
+        return NotImplemented

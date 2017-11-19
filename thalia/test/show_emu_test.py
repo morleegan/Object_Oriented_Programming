@@ -47,11 +47,18 @@ def test_make_show_info():
 
 
 def test_make_object():
-    s = show_emu_test.make_object(post)
+    s = show_emu_test.make_object(seating=post['seating_info'], showinfo=post['show_info'])
     assert sorted(s.keys()) == ['wid']
+    assert len(show_emu_test.shows) > 0
+
+
+def test_make_json_by_id():
+    s = show_emu_test.make_object(seating=post['seating_info'], showinfo=post['show_info'])
+    print(show_emu_test.shows[0])
 
 
 if __name__ == '__main__':
     test_make_json()
     test_make_show_info()
     test_make_object()
+    test_make_json_by_id()

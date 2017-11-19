@@ -45,6 +45,7 @@ def test_find_seats_fail():
 def test_check_sid():
     s2 = Sections(sid=1)
     assert s2.check_sid(1)
+    assert s2.check_sid(2) is False
 
 
 if __name__ == '__main__':
@@ -53,4 +54,5 @@ if __name__ == '__main__':
     test_get_rows()
     test_find_seats()
     test_find_seats_fail()
+    test_check_sid()
 
