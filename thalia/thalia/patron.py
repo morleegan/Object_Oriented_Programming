@@ -2,7 +2,7 @@
 class Patron:
     """Patron class"""
 
-    def __init__(self, name='John Doe', phone="", email="", billing_address="", cc_num ="", cc_exp=""):
+    def __init__(self, name='John Doe', phone="", email="", billing_address="", cc_num="", cc_exp=""):
         self.__name = name
         self.__phone = phone
         self.__email = email
@@ -27,3 +27,22 @@ class Patron:
 
     def get_cc_exp(self):
         return self.__cc_exp_date
+
+    # def set_name(self, name):
+    #     self.__name = name
+    #
+    # def set_phone(self, phone):
+    #     self.__phone = phone
+    #
+    # def set_email(self, email):
+    #     self.__email = email
+    #
+    # def set_bill_adr(self, bill_adr):
+    #     self.__billing_address = bill_adr
+    #
+    # def set_cc_num(self, num):
+    #     self.__cc_number = num
+    #
+    # def set_cc_exp(self, exp):
+    #     self.__cc_exp_date = exp
+    #

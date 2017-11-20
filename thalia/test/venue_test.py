@@ -1,4 +1,5 @@
 from thalia.venue import Theater
+from thalia.section import Sections
 
 s = [
       {
@@ -21,6 +22,7 @@ test_theater = Theater()
 def test_make_seating():
     test_theater.create_seating(s)
     assert test_theater.get_seating() is not None
+    assert isinstance(test_theater.get_seating()[0], Sections)
 
 
 if __name__ == '__main__':

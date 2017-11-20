@@ -1,10 +1,5 @@
 from flask import Flask
-from delivery.orderCont import order
-from delivery.reportCont import report
-from delivery.searchCont import search
-from delivery.seatingCont import seating
-from delivery.showCont import show_main
-from delivery.ticketCont import ticket
+from delivery.blueprints import show_main, seating, ticket, search, report, order
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False

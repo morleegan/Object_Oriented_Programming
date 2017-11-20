@@ -25,7 +25,8 @@ def test_find_seats():
 
 
 def test_get_as_list():
-    assert row1.get_seats_as_list() == [1,2,3,4,5]
+    test = list(map(lambda x: x.get_name(), row1.get_seats_as_list()))
+    assert test == [5,4,3,2,1]
 
 if __name__ == '__main__':
     test_get_row_number()

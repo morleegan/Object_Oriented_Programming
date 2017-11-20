@@ -2,6 +2,8 @@ from thalia.venue import Theater
 from thalia.show import Show
 from thalia.showinfo import ShowInfo
 
+"""Main methods of the different actions taken by the REST"""
+
 
 class Emulator:
     """Interface between Delivery and Thalia"""
@@ -28,27 +30,23 @@ class TheaterEmulator(Emulator):
 
     def make_section_by_id(self, sid=0):
         for section in self.theater.get_theater():
-            if sid == str(section.get_sid()):
+            if section.check_sid(sid):
                 return {
                     "sid": str(section.get_sid()),
                     "section_name": section.get_name(),
-                    "seating": list(map(lambda x: {"row": x.get_name(), "seats": x.get_seats_as_list()},
+                    "seating": list(map(lambda x: {"row": x.get_name(), "seats": TheaterEmulator.seats_as_list(x.get_seats_as_list())},
                                         section.get_rows()))
                 }
         return None
 
-    def make_seats_request(self, sid, wid):
-        # return {
-        #     "wid": None,
-        #     "show_info": {},
-        #     "sid": None,
-        #     "section_name": None,
-        #     "starting_seat_id": None,
-        #     "status": "ok",
-        #     "total_amount": None,
-        #     "seating": [],
-        # }
-        return NotImplemented
+    @staticmethod
+    def seats_as_list(seats):
+        return sorted(list(map(lambda x: x.get_name(), seats)))
+
+    @staticmethod
+    def seats_as_dict(seats):
+        return sorted(list(map(lambda x: {"cid": x.get_cid(), "seat": x.get_name(), "status": x.get_status()}, seats)),
+                      key=lambda x: x['seat'])
 
 
 class ShowEmulator(Emulator):
@@ -122,9 +120,28 @@ class ShowEmulator(Emulator):
                             "sid": sid,
                             "section_name": sec.get_name(),
                             "price": sec.get_price(),
-                            "seating": list(map(lambda x: {"row": x.get_name(), "seats": x.get_seats_as_list()},
-                                                sec.get_rows()))
+                            "seating": list(map(lambda x: {"row": x.get_name(), "seats":
+                                            TheaterEmulator.seats_as_dict(x.get_seats_as_list())}, sec.get_rows()))
                         }
+
+    def make_seats_request(self, wid=0, sid=0, count=0):
+        for show in self.shows:
+            if show.check_wid(wid):
+                for sec in show.get_seating_info():
+                    if sec.check_sid(sid):
+                        seats = sec.find_seats(count)
+                        json = {
+                            "wid": wid,
+                            "show_info": self.make_show_info(show.get_show_info()),
+                            "sid": sid,
+                            "section_name": sec.get_name(),
+                            "starting_seat_id": None,
+                            "status": sec.get_status(),
+                            "seating": seats if seats else list(),
+                        }
+                        if seats:
+                            json.update({"total_price": (sec.get_price() * count)})
+                        return json
 
 
 class PatronEmulator(Emulator):
@@ -148,12 +165,14 @@ class PatronEmulator(Emulator):
 
 class OrderEmulator(Emulator):
     """API order creates JSON"""
-    def __init__(self):
+    def __init__(self, orders=list()):
         Emulator.__init__(self)
+        self.orders = orders
 
     @staticmethod
     def make_json(order=None):
         if order:
+
             show = order.get_show()
             patron = order.get_patron()
             return {

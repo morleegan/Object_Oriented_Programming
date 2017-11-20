@@ -19,10 +19,10 @@ class Row:
         seat_list = []
         r = self.get_seats()
         while r.r_seat is not None:
-            seat_list.append(r.get_name())
+            seat_list.append(r)
             r = r.r_seat
-        seat_list.append(r.get_name())
-        return sorted(seat_list)
+        seat_list.append(r)
+        return seat_list
 
     def create_row(self, seat_list):
         """Creation of the linked list"""

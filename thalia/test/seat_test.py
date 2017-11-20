@@ -11,7 +11,7 @@ def test_check_availability():
 
 def test_bought_seat():
     s1.bought_seat()
-    assert s1.status == "sold"
+    assert s1.__status == "sold"
 
 
 if __name__ == '__main__':
