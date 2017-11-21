@@ -53,8 +53,7 @@ class Sections:
 
     def find_seats(self, req_num):
         """find seats for order"""
-        rows = self.get_rows()
-        for r in rows:
+        for r in self.get_rows():
             seats = r.find_seats(req_num)
             if seats:
                 return seats
