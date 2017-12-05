@@ -1,8 +1,5 @@
-morgan_peters_CS445
-A20333151 
-# CS 445: Homeworks and Projects
+# CS 445: Object Oriented Programming and Design
 ## Homework 1: Creatures and Things
 ## Homework 2: UML 
 ## Homework 3: Lightbulb and Lamp
 
-## Project: Thalia Tickets 
